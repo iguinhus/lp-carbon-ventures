@@ -1,0 +1,280 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #1A1A1A;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-carbon: #1A1A1A;
+  --color-carbon-light: #374151;
+  --color-carbon-dark: #0a0a0a;
+  --color-surface: #FFFFFF;
+  --color-surface-muted: #F9FAFB;
+  --color-terracotta: #d97757;
+  --color-terracotta-light: #e8957a;
+  --color-accent: var(--color-terracotta);
+  --color-accent-light: var(--color-terracotta-light);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-space-grotesk);
+}
+
+/* Fluid typography scale — in :root (not @theme inline) because clamp() is not supported as a Tailwind theme value */
+:root {
+  --text-display-xl: clamp(2.5rem, 5vw + 1rem, 4.5rem);
+  --text-display-lg: clamp(2rem, 4vw + 0.5rem, 3rem);
+  --text-display-md: clamp(1.5rem, 3vw + 0.25rem, 2rem);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+/* Display typography — base class sets font-family only (combine with a size utility or sized variant) */
+.text-display,
+.text-display-xl,
+.text-display-lg,
+.text-display-md {
+  font-family: var(--font-display), var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+.text-display-xl {
+  font-size: var(--text-display-xl);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.text-display-lg {
+  font-size: var(--text-display-lg);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.text-display-md {
+  font-size: var(--text-display-md);
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+/* Animated mesh gradient keyframe */
+@keyframes mesh-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Gradient backgrounds - animated mesh */
+.bg-gradient-hero {
+  background-color: #1A1A1A; /* fallback */
+  background:
+    radial-gradient(ellipse at 20% 30%, color-mix(in srgb, var(--color-accent) 12%, transparent) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 70%, color-mix(in srgb, var(--color-accent) 8%, transparent) 0%, transparent 50%),
+    linear-gradient(135deg, #1A1A1A 0%, #2a2a2a 50%, #1A1A1A 100%);
+  background-size: 200% 200%;
+  animation: mesh-shift 20s ease-in-out infinite;
+}
+
+.bg-gradient-dark {
+  background: linear-gradient(
+    135deg,
+    #1A1A1A 0%,
+    #2d2d2d 50%,
+    #1A1A1A 100%
+  );
+}
+
+.mesh-gradient-dark {
+  background-color: #1A1A1A; /* fallback */
+  background:
+    radial-gradient(ellipse at 30% 20%, color-mix(in srgb, var(--color-accent-light) 15%, transparent) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 80%, color-mix(in srgb, var(--color-accent) 10%, transparent) 0%, transparent 50%),
+    linear-gradient(135deg, #1A1A1A 0%, #2d2d2d 50%, #1A1A1A 100%);
+  background-size: 200% 200%;
+  animation: mesh-shift 20s ease-in-out infinite;
+}
+
+/* Subtle pattern overlay */
+.pattern-dots {
+  background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Button glow effect */
+.btn-glow {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-glow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.btn-glow:hover::before {
+  transform: translateX(100%);
+}
+
+/* Card hover lift */
+.card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.15),
+              0 0 0 1px color-mix(in srgb, var(--color-accent) 10%, transparent);
+}
+
+/* Step connector line */
+.step-connector {
+  position: relative;
+}
+
+.step-connector::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #1A1A1A, #d1d5db);
+  transform: translateY(-50%);
+}
+
+/* Number circle pulse */
+@keyframes pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+.pulse-ring {
+  position: relative;
+}
+
+.pulse-ring::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid #1A1A1A;
+  animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Text gradient */
+.text-gradient {
+  background: linear-gradient(135deg, #1A1A1A 0%, #4b5563 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Selection color */
+::selection {
+  background: #1A1A1A;
+  color: #ffffff;
+}
+
+/* Grain texture overlay */
+.grain-overlay {
+  position: relative;
+  -webkit-overflow-scrolling: touch; /* iOS Safari smooth scroll */
+}
+
+.grain-overlay::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 50; /* Below modals (typically 100+) */
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* Floating animations for orbs */
+@keyframes float-slow {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(10px, -15px) scale(1.02); }
+  66% { transform: translate(-8px, 10px) scale(0.98); }
+}
+
+@keyframes float-medium {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-15px, -20px); }
+}
+
+.animate-float-slow {
+  animation: float-slow 20s ease-in-out infinite;
+}
+
+.animate-float-medium {
+  animation: float-medium 20s ease-in-out infinite;
+}
+
+/* Atom spin animation for carbon atom illustration */
+@keyframes atom-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.atom-spin {
+  animation: atom-spin 20s linear infinite;
+}
+
+/* Illustration float animation */
+@keyframes illustration-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.illustration-float {
+  animation: illustration-float 6s ease-in-out infinite;
+}
+
+/* Accessibility: Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .bg-gradient-hero,
+  .mesh-gradient-dark {
+    animation: none;
+  }
+
+  .animate-float-slow,
+  .animate-float-medium,
+  .atom-spin,
+  .illustration-float {
+    animation: none;
+  }
+
+  .pulse-ring::before {
+    animation: none;
+  }
+
+  .card-hover {
+    transition: none;
+  }
+
+  .grain-overlay::before {
+    display: none;
+  }
+}
